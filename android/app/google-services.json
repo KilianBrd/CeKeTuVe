@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "397944390896",
+    "project_id": "cequejeveux-96202",
+    "storage_bucket": "cequejeveux-96202.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397944390896:android:0c9bd6747c4f5a1ea0ee35",
+        "android_client_info": {
+          "package_name": "com.example.cequejeveux"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC52waXCmCvfcz0AGQJrcZ6T3phPv_E44o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
