@@ -5,8 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PageTemplate extends StatefulWidget {
   Widget body;
   String title = '';
+  Color backgroundColor;
 
-  PageTemplate({super.key, required this.body, this.title = ''});
+  PageTemplate(
+      {super.key,
+      required this.body,
+      this.title = '',
+      this.backgroundColor = Colors.white});
 
   @override
   State<PageTemplate> createState() => _PageTemplateState();
@@ -31,10 +36,15 @@ class _PageTemplateState extends State<PageTemplate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: widget.backgroundColor,
         appBar: AppBar(
+          foregroundColor: Colors.white,
           actions: [
             IconButton(
-              icon: Icon(Icons.settings),
+              icon: Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
               onPressed: () {
                 Navigator.pushNamed(context, '/settings');
               },
@@ -48,10 +58,13 @@ class _PageTemplateState extends State<PageTemplate> {
                     Navigator.pushNamedAndRemoveUntil(
                         context, '/register', (r) => false);
                   },
-                  child: Text('Se déconnecter'))
+                  child: Text(
+                    'Se déconnecter',
+                    style: TextStyle(color: Colors.white),
+                  ))
           ],
           title: Text(widget.title),
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: Color(0xFF7B435B),
         ),
         body: widget.body);
   }

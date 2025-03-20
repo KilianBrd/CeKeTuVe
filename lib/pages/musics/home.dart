@@ -6,6 +6,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:cequejeveux/Model/music.dart';
 import 'package:cequejeveux/pages/login/signup.dart';
 import 'package:cequejeveux/pages/musics/addMusics.dart';
+import 'package:cequejeveux/tools.dart';
 import 'package:cequejeveux/widget/PageTemplate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -153,14 +154,18 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
+      backgroundColor: Color(0xFF9FA0C3),
       title: widget.title,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: color4,
+              ),
               onPressed: () {
-                // Navigate to the MusicsPage when the image is tapped
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AddMusicPage()),
@@ -180,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   "URL en cours : $_currentVideoUrl",
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  style: TextStyle(fontSize: 14, color: Colors.black),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -199,9 +204,14 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 ElevatedButton.icon(
                   onPressed: _isPlaying ? stopAudio : () => buttonPlayAction(),
-                  icon: Icon(_isPlaying ? Icons.stop : Icons.play_arrow),
-                  label: Text(_isPlaying ? "Stop" : "Play Audio"),
+                  icon: Icon(
+                    _isPlaying ? Icons.stop : Icons.play_arrow,
+                    color: Colors.white,
+                  ),
+                  label: Text(_isPlaying ? "Stop" : "Lancer la musique"),
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF8B687F),
+                    foregroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   ),
                 ),

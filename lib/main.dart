@@ -6,6 +6,7 @@ import 'package:cequejeveux/pages/settings/settings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
@@ -73,6 +74,7 @@ class _MyAppState extends State<MyApp> {
       },
       title: 'YouTube Audio Player',
       theme: ThemeData(
+        textTheme: GoogleFonts.ptSansTextTheme(),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
