@@ -42,4 +42,19 @@ class Song {
         .map((snapshot) =>
             snapshot.docs.map((doc) => Song.fromSnapshot(doc)).toList());
   }
+
+  removeThisSong() async {
+    await FirebaseFirestore.instance
+        .collection('musics')
+        .where('userId', isEqualTo: userId)
+        .where('title', isEqualTo: title)
+        .where('artist', isEqualTo: artist)
+        .where('URL', isEqualTo: URL)
+        .get()
+        .then((snapshot) {
+      for (var doc in snapshot.docs) {
+        doc.reference.delete();
+      }
+    });
+  }
 }

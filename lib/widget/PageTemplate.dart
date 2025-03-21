@@ -38,6 +38,16 @@ class _PageTemplateState extends State<PageTemplate> {
     return Scaffold(
         backgroundColor: widget.backgroundColor,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.arrow_back_ios_new),
+            ),
+          ),
           foregroundColor: Colors.white,
           actions: [
             IconButton(

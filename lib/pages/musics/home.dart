@@ -3,9 +3,11 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cequejeveux/Model/User.dart';
 import 'package:cequejeveux/Model/music.dart';
 import 'package:cequejeveux/pages/login/signup.dart';
 import 'package:cequejeveux/pages/musics/addMusics.dart';
+import 'package:cequejeveux/pages/musics/allMusicsUser.dart';
 import 'package:cequejeveux/tools.dart';
 import 'package:cequejeveux/widget/PageTemplate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,6 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String musicTitle = '';
   String musicArtist = '';
   String? userId;
+  String? pseudo;
 
   @override
   void initState() {
@@ -39,8 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _setupAudioPlayer() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId = prefs.getString('userId');
+    String? tempoPseudo = await User().getPseudoById(userId.toString());
     setState(() {
-      userId = prefs.getString('userId');
+      pseudo = tempoPseudo;
     });
     // Listen for state changes using the updated API
     _audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
@@ -160,19 +165,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: color4,
+            Text(
+              'Bienvenue, ${pseudo ?? ''}',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddMusicPage()),
-                );
-              },
-              child: Text('Ajouter une musique'),
             ),
+            spacingXL,
             Text(
               _isPlaying
                   ? "En train de lire : $musicTitle - $musicArtist"
@@ -216,6 +216,39 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ],
+            ),
+            spacingM,
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: color4,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddMusicPage()),
+                );
+              },
+              child: Text(
+                'Ajouter une musique',
+              ),
+            ),
+            spacingM,
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: color4,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AllMusicsByUserPage()),
+                );
+              },
+              child: Text(
+                'Toutes mes musiques',
+              ),
             ),
           ],
         ),
