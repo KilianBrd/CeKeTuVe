@@ -1,5 +1,6 @@
 import 'package:cequejeveux/pages/login/login.dart';
 import 'package:cequejeveux/pages/login/signup.dart';
+import 'package:cequejeveux/pages/musics/addMusics.dart';
 import 'package:cequejeveux/pages/musics/home.dart';
 import 'package:cequejeveux/pages/settings/changeBackground.dart';
 import 'package:cequejeveux/pages/settings/settings.dart';
@@ -69,6 +70,7 @@ class _MyAppState extends State<MyApp> {
         '/home': (context) => const MyHomePage(title: 'Ce que je veux'),
         '/register': (context) => const signup(),
         '/login': (context) => const login(),
+        '/addMusic': (context) => const AddMusicPage(),
         '/settings': (context) => const SettingsPage(),
         '/settings/background': (context) => const ChangeBackground(),
       },

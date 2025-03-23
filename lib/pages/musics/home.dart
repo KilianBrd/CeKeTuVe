@@ -140,6 +140,23 @@ class _MyHomePageState extends State<MyHomePage> {
             musicTitle = randomSong.title!;
           });
         }
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text("Aucune musique"),
+                content: Text("Aucune musique disponible pour cet utilisateur"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/addMusic');
+                    },
+                    child: Text("Ajouter une musique"),
+                  )
+                ],
+              );
+            });
       }
     }, onError: (error) {
       print("Erreur lors de la récupération des chansons: $error");
@@ -215,6 +232,23 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   ),
                 ),
+                if (_isPlaying) ...[
+                  horizontalspacingS,
+                  ElevatedButton.icon(
+                    onPressed: () => buttonPlayAction(),
+                    label: Text('Prochaine musique'),
+                    icon: Icon(
+                      Icons.skip_next,
+                      color: Colors.white,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF8B687F),
+                      foregroundColor: Colors.white,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    ),
+                  )
+                ]
               ],
             ),
             spacingM,

@@ -16,6 +16,14 @@ SizedBox spacingL = SizedBox(height: 35);
 SizedBox spacingXL = SizedBox(height: 40);
 SizedBox spacingXXL = SizedBox(height: 50);
 
+SizedBox horizontalspacingXS = SizedBox(width: 5);
+SizedBox horizontalspacingS = SizedBox(width: 10);
+SizedBox horizontalspacingsM = SizedBox(width: 20);
+SizedBox horizontalspacingM = SizedBox(width: 25);
+SizedBox horizontalspacingL = SizedBox(width: 35);
+SizedBox horizontalspacingXL = SizedBox(width: 40);
+SizedBox horizontalspacingXXL = SizedBox(width: 50);
+
 showToast(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(text),
