@@ -2,6 +2,7 @@ import 'package:cequejeveux/Model/music.dart';
 import 'package:cequejeveux/tools.dart';
 import 'package:cequejeveux/widget/PageTemplate.dart';
 import 'package:cequejeveux/widget/form/textFieldMusic.dart';
+import 'package:field_suggestion/field_suggestion.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,9 +29,16 @@ class _AddMusicPageState extends State<AddMusicPage> {
     });
   }
 
-  TextEditingController _musicName = TextEditingController();
-  TextEditingController _musicArtist = TextEditingController();
-  TextEditingController _musicUrl = TextEditingController();
+  Future<List<Song>> loadAllSong(input) {
+    Song song = Song();
+    return song.getSongWithString(input);
+  }
+
+  final TextEditingController _musicName = TextEditingController();
+  final TextEditingController _musicArtist = TextEditingController();
+  final TextEditingController _musicUrl = TextEditingController();
+  TextEditingController songFromBdd = TextEditingController();
+  BoxController boxController = BoxController();
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
@@ -41,6 +49,55 @@ class _AddMusicPageState extends State<AddMusicPage> {
         child: Column(
           children: [
             Text('Ajouter une musique'),
+            spacingM,
+            Text('Rechercher une musique dans la base de données'),
+            FieldSuggestion.network(
+                inputDecoration: InputDecoration(
+                  hintText: 'Rechercher une musique',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                boxController: boxController,
+                textController: songFromBdd,
+                future: (input) => loadAllSong(input),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(snapshot.data![index].title
+                              .toString()
+                              .capitalize()),
+                          subtitle: Text(snapshot.data![index].artist
+                              .toString()
+                              .capitalize()),
+                          onTap: () async {
+                            Song newSong = Song(
+                                userId: userId,
+                                title:
+                                    snapshot.data![index].title?.toLowerCase(),
+                                artist:
+                                    snapshot.data![index].artist?.toLowerCase(),
+                                URL: snapshot.data![index].URL);
+                            await newSong.addToFirebase();
+                            boxController.close?.call();
+                            showToast(context, 'Musique ajoutée !');
+                          },
+                        );
+                      },
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                }),
+            spacingM,
+            Text('---------------------- OU -------------------------'),
+            Text('Ajouter une musique dans la base de données'),
+            spacingM,
             TextFieldMusic(
               icon: Icon(Icons.music_note),
               controller: _musicName,
@@ -69,8 +126,8 @@ class _AddMusicPageState extends State<AddMusicPage> {
                 onPressed: () {
                   Song newSong = Song(
                       userId: userId,
-                      title: _musicName.text,
-                      artist: _musicArtist.text,
+                      title: _musicName.text.toLowerCase(),
+                      artist: _musicArtist.text.toLowerCase(),
                       URL: _musicUrl.text);
                   newSong.addToFirebase();
                   showToast(context, 'Musique ajoutée !');

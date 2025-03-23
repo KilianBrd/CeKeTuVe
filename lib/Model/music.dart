@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class Song {
   final String? title;
@@ -21,6 +22,25 @@ class Song {
       URL: data['URL'],
       userId: data['userId'],
     );
+  }
+
+  Future<List<Song>> getSongWithString(query) async {
+    var titleSnapshot = await FirebaseFirestore.instance
+        .collection('musics')
+        .where('title', isGreaterThanOrEqualTo: query.toString().toLowerCase())
+        .where('title',
+            isLessThanOrEqualTo: '${query.toString().toLowerCase()}\uf8ff')
+        .get();
+
+    var artistSnapshot = await FirebaseFirestore.instance
+        .collection('musics')
+        .where('artist', isGreaterThanOrEqualTo: query)
+        .where('artist', isLessThanOrEqualTo: query + '\uf8ff')
+        .get();
+
+    var combinedResults = [...titleSnapshot.docs, ...artistSnapshot.docs];
+    var uniqueResults = Set.from(combinedResults).toList();
+    return uniqueResults.map((doc) => Song.fromSnapshot(doc)).toList();
   }
 
   addToFirebase() async {

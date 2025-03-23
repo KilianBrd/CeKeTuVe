@@ -63,7 +63,7 @@ class _AllMusicsByUserPageState extends State<AllMusicsByUserPage> {
                       Song song = snapshot.data![index];
                       return ListTile(
                         title: Text(
-                            '${song.title.toString()} - ${song.artist.toString()}'),
+                            '${song.title.toString().capitalize()} - ${song.artist.toString().capitalize()}'),
                         trailing: IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () async {

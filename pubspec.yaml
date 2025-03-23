@@ -45,6 +45,8 @@ dependencies:
   youtube_player_flutter: ^9.1.1
   flutter_inappwebview: ^6.1.5
   google_fonts: ^6.2.1
+  field_suggestion: ^0.2.6
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
